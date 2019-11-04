@@ -1,72 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <style>
-        *{
+        * {
             padding: 0;
             margin: 0;
             overflow: hidden;
         }
-        li{
+
+        li {
             float: left;
             list-style: none;
             width: 150px;
             height: 50px;
             text-align: center;
-            line-height:50px;
+            line-height: 50px;
             background: red;
-            margin-left:1px;
+            margin-left: 1px;
         }
-        a{
+
+        a {
             text-decoration: none;
-            color:#fff
+            color: #fff
         }
-        #main>div{
+
+        #main>div {
             float: left;
             width: 500px;
             height: 500px;
-            border:1px solid #000;
+            border: 1px solid #000;
         }
-        #wrap{
+
+        #wrap {
             display: flex;
             flex-flow: column;
             align-items: center;
         }
     </style>
 </head>
+
 <body>
-    <div id='wrap'>
-        <!-- <div id='header'>
-            <ul>
+    <div id='app'>
+        <div id="header">
+            <ul is="oHeader"></ul>
+            <!-- <ul>
                 <li><a href="#">fff</a></li>
                 <li><a href="#">哈哈哈</a></li>
                 <li><a href="#">得到的</a></li>
                 <li><a href="#">dddd</a></li>
                 <li><a href="#">得到的</a></li>
-            </ul>
+            </ul> -->
         </div>
         <div id='main'>
-            <div id='aside'>
+            <div v-for='d in arr' :d='d' is="oMain"></div>
+            <!-- <div id='aside'>
                 <p>我是侧边栏</p>
             </div>
             <div id='article'>
                 <p>我是内容区域</p>
-            </div>
+            </div> -->
         </div>
         <div id='footer'>
-            <ul>
-                <li>11</li>
+            <ul is="oFooter">
+                <!-- <li>11</li>
                 <li>22</li>
-                <li>33</li>
+                <li>33</li> -->
             </ul>
-        </div> -->
+        </div>
     </div>
 </body>
+<script src="../js/vue.js"></script>
 <script>
     //在wrap内书写5个组件,分别代表header,main,footer,aside,article,保证层级关系和样式.
+    let oHeader = {
+        template: `
+       
+            <ul>
+                <li v-for='d in arr'><a href="#">{{d}}</a></li>
+            </ul>
+       
+        `,
+        data() {
+            return {
+                arr: ['fff', '哈哈哈', '得到的', 'dddd', '得到的']
+            }
+        },
+    }
+
+    let oFooter = {
+        template: `
+        <ul>
+                <li v-for='d in arr'>{{d}}</li>
+                
+        </ul>
+        `,
+        data() {
+            return {
+                arr: [11, 22, 33]
+            }
+        },
+    }
+    let oMain = {
+        template: `
+            <div :id='d.index'>
+                <p>{{d.cont}}</p>
+            </div>
+        `,
+        props: ['d']
+    }
+
+    let vm = new Vue({
+        el: '#app',
+        components: { oMain, oHeader, oFooter },
+        data: {
+            arr: [
+                { index: 'aside', cont: '我是侧边栏' },
+                { index: 'article', cont: '我是内容区域' }
+            ]
+        }
+
+
+    })
 </script>
+
 </html>

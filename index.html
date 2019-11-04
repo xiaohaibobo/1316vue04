@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <div id="app">
+        <div is='box'></div>
+    </div> -->
+    <div id="app">
+        <ul>
+            <li v-for='d in arr' is='son' :d='d'></li>
+        </ul>
+    </div>
+</body>
+<script src="./js/vue.js"></script>
+<script>
+    // let box = {
+    //     template:
+    //         `
+    //     <ul>
+    //         <li>{{num1}}</li>
+    //     </ul>
+    //     `,
+    //     data() {
+    //         return {
+    //             num1: 123
+    //         }
+    //     },
+    // }
+    let son = {
+        template: `
+        <li>{{d.name}}</li>
+        `,
+        props: ['d']
+    }
+    let vm = new Vue({
+        el: '#app',
+        components: { son },
+        data: {
+            arr: [
+                { name: 02, sex: '女' },
+                { name: 03, sex: '女' },
+                { name: 04, sex: '男' },
+
+            ],
+        }
+
+    })
+</script>
+
+</html>

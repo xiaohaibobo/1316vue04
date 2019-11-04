@@ -1,23 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
     <div id='app'>
-        <input type="button" value='插入li'>
-        <input type="text" value="" />
-        <div></div>
+        <input type="button" value='插入p' @click='insert'>
+        <input type="text" value="" v-model='cont' />
+        <div v-for='d in arr' is="oInsert" :d='d'>
+
+        </div>
     </div>
 </body>
+<script src="../js/vue.js"></script>
 <script>
-	
-	//组件 -> 数据共享
-	
+
+    //组件 -> 数据共享
+
     //把app内的div变成子组件,每点击一次按钮,在组件内插入一个p,p的内容从父组件的文本框获取.
-    
+    let oInsert = {
+        template: `
+        <p>{{d}}</p>
+        `,
+        props:['d']
+    }
+
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            cont: '',
+            arr: []
+
+        },
+        methods: {
+            insert() {
+                if (this.cont != '') {
+                    this.arr.push(this.cont)
+                }
+            }
+        },
+        components: { oInsert }
+
+    })
 </script>
+
 </html>

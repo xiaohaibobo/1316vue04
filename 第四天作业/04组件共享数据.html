@@ -1,21 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+
 <body>
     <div id='app'>
-        <input type="text">
-        <input type="button" value='插入li'>
-        <section></section>
+        <input type="text" v-model='cont'>
+        <input type="button" value='插入li' @click='insert'>
+        <section :d='d' v-for='d in arr' is="oCheck">
+
+        </section>
         <div></div>
     </div>
 </body>
-<script>  
+<script src="../js/vue.js"></script>
+<script>
     //每次点击按钮在section内插入一个checkbox和一个span。span的内容从文本框获取
     //把app内的div写成组件,每勾选一个checkbox都将checkbox后span的内容显示到组件内
+    let oCheck = {
+        template: `
+        <section>
+            <input type="checkbox" v-model='cont2'>
+            <span>{{d}}</span>
+        </section>
+        `,
+        props: ['d'],
+        data() {
+            return {
+                cont2: ''
+            }
+        },
+    }
+
+    let vm = new Vue({
+        el: '#app',
+        data: {
+            cont: '',
+            arr: []
+        },
+        components: { oCheck },
+        methods: {
+            insert() {
+                if (this.cont != '') {
+                    this.arr.push(this.cont);
+                }
+            }
+        },
+    })
 </script>
+
 </html>
